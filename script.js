@@ -334,17 +334,29 @@ document.addEventListener("DOMContentLoaded", () => {
 
       fillSelect(selects.class, Object.keys(data.classes || {}), "Wybierz klasę", sortClassNames);
       fillSelect(
-        selects.teacher,
-        Object.keys(data.teachers || {}),
-        "Wybierz nauczyciela",
-        (a, b) => a.localeCompare(b, "pl")
-      );
-      fillSelect(
         selects.room,
         Object.keys(data.rooms || {}),
         "Wybierz salę",
         (a, b) => a.localeCompare(b, "pl", { numeric: true })
       );
+
+      const teacherNames = Object.keys(data.teachers || {});
+      const teachersUnavailable =
+        data.teachersUnavailable === true || teacherNames.length === 0;
+      if (teachersUnavailable) {
+        const reason =
+          data.teachersUnavailableReason ||
+          "Nauczyciele niedostępni — szkoła ukryła te dane.";
+        selects.teacher.disabled = true;
+        selects.teacher.innerHTML = `<option value="" disabled selected>${reason}</option>`;
+        selects.teacher.title = reason;
+      } else {
+        selects.teacher.disabled = false;
+        selects.teacher.removeAttribute("title");
+        fillSelect(selects.teacher, teacherNames, "Wybierz nauczyciela", (a, b) =>
+          a.localeCompare(b, "pl")
+        );
+      }
 
       if (!Object.keys(plany).length) {
         plansContainer.innerHTML =

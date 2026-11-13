@@ -79,6 +79,13 @@ nav select:focus {
   box-shadow: 0 0 0 3px rgba(43, 108, 176, 0.2);
 }
 
+nav select:disabled {
+  cursor: not-allowed;
+  color: #7b8794;
+  background: #e4e7eb;
+  border-color: #cbd2d9;
+}
+
 #plans {
   width: 100%;
   max-width: 1100px;

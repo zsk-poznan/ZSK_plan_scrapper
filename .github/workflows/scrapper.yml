@@ -26,11 +26,8 @@ jobs:
         with:
           node-version: "20"
 
-      - name: Zainstaluj Puppeteer oraz Cheerio
-        run: npm install puppeteer cheerio
-
       - name: Scrapuj stronę
-        run: node scraper.mjs
+        run: node scrape.mjs
 
       - name: Commit i push zmian
         run: |
